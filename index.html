@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Associations Caritatives</title>
+</head>
+<body>
+    <h1>Associations Caritatives</h1>
+    <table border="1">
+        <thead>
+            <tr>
+                <th>Titre</th>
+                <th>Objet</th>
+            </tr>
+        </thead>
+        <tbody id="table-body">
+            <!-- Les données JSON seront insérées ici -->
+        </tbody>
+    </table>
+    <script>
+        fetch('/data')
+            .then(response => response.json())
+            .then(data => {
+                const tableBody = document.getElementById('table-body');
+                data.forEach(item => {
+                    if (item.title && item.object) {
+                        const row = document.createElement('tr');
+                        const titleCell = document.createElement('td');
+                        const objectCell = document.createElement('td');
+                        
+                        titleCell.textContent = item.title;
+                        objectCell.textContent = item.object;
+                        
+                        row.appendChild(titleCell);
+                        row.appendChild(objectCell);
+                        tableBody.appendChild(row);
+                    }
+                });
+            })
+            .catch(error => console.error('Erreur:', error));
+    </script>
+</body>
+</html>
